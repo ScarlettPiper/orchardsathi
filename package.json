@@ -1,0 +1,22 @@
+{
+  "name": "orchardsathi-ai",
+  "version": "1.0.0",
+  "description": "OrchardSathi AI: An AI-Powered Apple Orchard Health and Decision Support System for Kashmir",
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run dev",
+    "client:build": "cd client && npm run build",
+    "client:preview": "cd client && npm run preview"
+  },
+  "keywords": [
+    "kashmir",
+    "apple-orchards",
+    "ai-disease-detection",
+    "pytorch",
+    "express",
+    "react",
+    "fastapi"
+  ],
+  "author": "OrchardSathi AI Team",
+  "license": "MIT"
+}
