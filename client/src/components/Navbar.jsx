@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   Sprout, 
   ScanLine, 
@@ -13,15 +14,18 @@ import {
   ShieldCheck, 
   History,
   LayoutDashboard,
-  Sparkles
+  Sparkles,
+  Languages
 } from 'lucide-react';
 
 export default function Navbar() {
   const { user, role, isAuthenticated, logout, quickLoginAs } = useAuth();
+  const { lang, setLang, t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [demoMenuOpen, setDemoMenuOpen] = useState(false);
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -151,6 +155,48 @@ export default function Navbar() {
           {/* Right Action Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             
+            {/* Language Selector Dropdown (English / Urdu / Kashmiri) */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setLangMenuOpen(!langMenuOpen)}
+                className="flex items-center space-x-1.5 px-2.5 py-1.5 text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/80 rounded-lg transition-colors"
+                title="Change language (English / Urdu / Kashmiri)"
+              >
+                <Languages className="w-3.5 h-3.5 text-emerald-600" />
+                <span>{lang === 'en' ? 'English' : lang === 'ur' ? 'اردو (Urdu)' : 'کٲشُر (Kashmiri)'}</span>
+              </button>
+
+              {langMenuOpen && (
+                <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 animate-in fade-in slide-in-from-top-2">
+                  <div className="px-3 py-1 border-b border-slate-100 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                    Select Language:
+                  </div>
+                  <button
+                    onClick={() => { setLang('en'); setLangMenuOpen(false); }}
+                    className={`w-full text-left px-3 py-1.5 text-xs hover:bg-emerald-50 flex items-center justify-between ${lang === 'en' ? 'font-bold text-emerald-800 bg-emerald-50/50' : 'text-slate-700'}`}
+                  >
+                    <span>🇬🇧 English</span>
+                    {lang === 'en' && <span className="text-[10px] text-emerald-600 font-bold">✓</span>}
+                  </button>
+                  <button
+                    onClick={() => { setLang('ur'); setLangMenuOpen(false); }}
+                    className={`w-full text-left px-3 py-1.5 text-xs hover:bg-emerald-50 flex items-center justify-between ${lang === 'ur' ? 'font-bold text-emerald-800 bg-emerald-50/50' : 'text-slate-700'}`}
+                  >
+                    <span>🇵🇰 اردو (Urdu)</span>
+                    {lang === 'ur' && <span className="text-[10px] text-emerald-600 font-bold">✓</span>}
+                  </button>
+                  <button
+                    onClick={() => { setLang('ks'); setLangMenuOpen(false); }}
+                    className={`w-full text-left px-3 py-1.5 text-xs hover:bg-emerald-50 flex items-center justify-between ${lang === 'ks' ? 'font-bold text-emerald-800 bg-emerald-50/50' : 'text-slate-700'}`}
+                  >
+                    <span>🍎 کٲشُر (Kashmiri)</span>
+                    {lang === 'ks' && <span className="text-[10px] text-emerald-600 font-bold">✓</span>}
+                  </button>
+                </div>
+              )}
+            </div>
+
             {/* Quick Demo Switcher Pill (Great for Review Evaluation!) */}
             <div className="relative">
               <button

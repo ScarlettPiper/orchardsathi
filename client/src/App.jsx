@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -46,88 +47,90 @@ function NotFoundPage() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <div className="min-h-screen flex flex-col bg-[#F7F9F6] selection:bg-emerald-600 selection:text-white">
-          <Navbar />
-          
-          <main className="flex-1">
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
+    <LanguageProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <div className="min-h-screen flex flex-col bg-[#F7F9F6] selection:bg-emerald-600 selection:text-white">
+            <Navbar />
+            
+            <main className="flex-1">
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
 
-              {/* Farmer Routes (Primary Functional Module) */}
-              <Route
-                path="/farmer/dashboard"
-                element={
-                  <ProtectedRoute allowedRoles={['farmer']}>
-                    <FarmerDashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/farmer/detect"
-                element={
-                  <ProtectedRoute allowedRoles={['farmer']}>
-                    <DiseaseDetectionPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/farmer/scan/:id"
-                element={
-                  <ProtectedRoute allowedRoles={['farmer', 'expert']}>
-                    <ScanResultPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/farmer/history"
-                element={
-                  <ProtectedRoute allowedRoles={['farmer']}>
-                    <ScanHistoryPage />
-                  </ProtectedRoute>
-                }
-              />
+                {/* Farmer Routes (Primary Functional Module) */}
+                <Route
+                  path="/farmer/dashboard"
+                  element={
+                    <ProtectedRoute allowedRoles={['farmer']}>
+                      <FarmerDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/farmer/detect"
+                  element={
+                    <ProtectedRoute allowedRoles={['farmer']}>
+                      <DiseaseDetectionPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/farmer/scan/:id"
+                  element={
+                    <ProtectedRoute allowedRoles={['farmer', 'expert']}>
+                      <ScanResultPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/farmer/history"
+                  element={
+                    <ProtectedRoute allowedRoles={['farmer']}>
+                      <ScanHistoryPage />
+                    </ProtectedRoute>
+                  }
+                />
 
-              {/* Customer Routes (Market Prices & Trends) */}
-              <Route
-                path="/customer/dashboard"
-                element={
-                  <ProtectedRoute allowedRoles={['customer']}>
-                    <CustomerDashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/customer/prices"
-                element={
-                  <ProtectedRoute allowedRoles={['customer']}>
-                    <MarketPricesPage />
-                  </ProtectedRoute>
-                }
-              />
+                {/* Customer Routes (Market Prices & Trends) */}
+                <Route
+                  path="/customer/dashboard"
+                  element={
+                    <ProtectedRoute allowedRoles={['customer']}>
+                      <CustomerDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/customer/prices"
+                  element={
+                    <ProtectedRoute allowedRoles={['customer']}>
+                      <MarketPricesPage />
+                    </ProtectedRoute>
+                  }
+                />
 
-              {/* Agricultural Expert Routes */}
-              <Route
-                path="/expert/dashboard"
-                element={
-                  <ProtectedRoute allowedRoles={['expert']}>
-                    <ExpertDashboard />
-                  </ProtectedRoute>
-                }
-              />
+                {/* Agricultural Expert Routes */}
+                <Route
+                  path="/expert/dashboard"
+                  element={
+                    <ProtectedRoute allowedRoles={['expert']}>
+                      <ExpertDashboard />
+                    </ProtectedRoute>
+                  }
+                />
 
-              {/* Fallback Catch-All */}
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </main>
+                {/* Fallback Catch-All */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </main>
 
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
